@@ -1,5 +1,9 @@
 package nazih.youssef.backend.entities;
 
-public class ContratAssuranceHabitation extends ContratAssurance{
+import nazih.youssef.backend.enums.TypeLogement;
 
+public class ContratAssuranceHabitation extends ContratAssurance{
+    private TypeLogement typeLogement;
+    private String adresseLogement;
+    private String superficie;
 }
