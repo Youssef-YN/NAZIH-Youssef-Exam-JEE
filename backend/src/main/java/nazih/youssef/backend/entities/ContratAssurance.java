@@ -1,5 +1,6 @@
 package nazih.youssef.backend.entities;
 // 72
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,5 +32,6 @@ public abstract class ContratAssurance {
     private List<Paiement> paiements;
 
     @ManyToOne
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Client client;
 }
