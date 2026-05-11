@@ -20,13 +20,14 @@ public abstract class ContratAssurance {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Date dateSouscription;
+    @Enumerated(EnumType.STRING)
     private StatusContrat status;
     private Date dateValidation;
     private double montantCotisation;
     private int dureeContrat; // Duree en mois Monsieur
     private double tauxCouverture;
 
-    @OneToMany(mappedBy = "contratAssurance", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "contratAssurance", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Paiement> paiements;
 
     @ManyToOne

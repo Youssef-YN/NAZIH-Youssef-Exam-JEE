@@ -19,5 +19,5 @@ public class Client {
     private String email;
 
     @OneToMany(mappedBy = "client",  fetch = FetchType.LAZY,  cascade = CascadeType.ALL)
-    List<ContratAssurance> contratAssurance;
+    private List<ContratAssurance> contratsAssurance;
 }

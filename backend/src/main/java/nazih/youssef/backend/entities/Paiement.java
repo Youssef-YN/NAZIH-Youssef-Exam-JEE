@@ -17,8 +17,9 @@ public class Paiement {
     private Long id;
     private Date date;
     private double montant;
+    @Enumerated(EnumType.STRING)
     private TypePaiement type;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private ContratAssurance contrat;
+    private ContratAssurance contratAssurance;
 }
