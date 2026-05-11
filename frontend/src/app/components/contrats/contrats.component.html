@@ -1,1 +1,132 @@
-<p>contrats works!</p>
+<div class="container mt-2">
+  <div class="row">
+    <div class="col col-md-5">
+      <div class="card">
+        <div class="card-header">New Contrat</div>
+        <div class="card-body">
+          <form [formGroup]="contratFormGroup" (ngSubmit)="handleSaveContrat()">
+            <div class="mb-3">
+              <label class="form-label">Type :</label>
+              <select formControlName="type" class="form-select">
+                <option value="AUTO">Automobile</option>
+                <option value="HABITATION">Habitation</option>
+                <option value="SANTE">Santé</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Client ID :</label>
+              <input type="number" formControlName="clientId" class="form-control">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Montant Cotisation :</label>
+              <input type="number" formControlName="montantCotisation" class="form-control">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Durée (mois) :</label>
+              <input type="number" formControlName="dureeContrat" class="form-control">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Taux Couverture :</label>
+              <input type="number" formControlName="tauxCouverture" class="form-control">
+            </div>
+
+            <ng-container *ngIf="contratFormGroup.value.type == 'AUTO'">
+              <div class="mb-3">
+                <label class="form-label">Immatriculation :</label>
+                <input type="text" formControlName="immatriculationVehicule" class="form-control">
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Marque :</label>
+                <input type="text" formControlName="marqueVehicule" class="form-control">
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Modèle :</label>
+                <input type="text" formControlName="modeleVehicule" class="form-control">
+              </div>
+            </ng-container>
+
+            <ng-container *ngIf="contratFormGroup.value.type == 'HABITATION'">
+              <div class="mb-3">
+                <label class="form-label">Type Logement :</label>
+                <select formControlName="typeLogement" class="form-select">
+                  <option value="APPARTEMENT">Appartement</option>
+                  <option value="MAISON">Maison</option>
+                  <option value="LOCAL_COMMERCIAL">Local Commercial</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Adresse :</label>
+                <input type="text" formControlName="adresseLogement" class="form-control">
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Superficie :</label>
+                <input type="number" formControlName="superficie" class="form-control">
+              </div>
+            </ng-container>
+
+            <ng-container *ngIf="contratFormGroup.value.type == 'SANTE'">
+              <div class="mb-3">
+                <label class="form-label">Niveau Couverture :</label>
+                <select formControlName="niveauCouverture" class="form-select">
+                  <option value="BASIQUE">Basique</option>
+                  <option value="INTERMEDIAIRE">Intermédiaire</option>
+                  <option value="PREMIUM">Premium</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Nombre Personnes :</label>
+                <input type="number" formControlName="nombrePersonnesCouvertes" class="form-control">
+              </div>
+            </ng-container>
+
+            <div class="d-grid mb-3">
+              <button class="btn btn-success">
+                <i class="bi bi-plus-circle"></i> Save Contrat
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col col-md-7">
+      <div class="card">
+        <div class="card-header">Contrats</div>
+        <div class="card-body">
+          <ng-container *ngIf="contratsObservable | async as contrats; else errorTemplate">
+            <table class="table table-sm">
+              <thead>
+                <tr><th>ID</th><th>Type</th><th>Client</th><th>Status</th><th>Montant</th><th></th></tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let contrat of contrats">
+                  <td>{{contrat.id}}</td>
+                  <td>{{contrat.type}}</td>
+                  <td>{{contrat.clientId}}</td>
+                  <td>{{contrat.status}}</td>
+                  <td>{{contrat.montantCotisation | number : '1.2-2'}}</td>
+                  <td>
+                    <button (click)="handleValiderContrat(contrat)" class="btn btn-success btn-sm me-1" title="Valider">
+                      <i class="bi bi-check-circle"></i>
+                    </button>
+                    <button (click)="handleResilierContrat(contrat)" class="btn btn-warning btn-sm me-1" title="Résilier">
+                      <i class="bi bi-x-circle"></i>
+                    </button>
+                    <button (click)="handleDeleteContrat(contrat)" class="btn btn-danger btn-sm" title="Delete">
+                      <i class="bi bi-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </ng-container>
+          <ng-template #errorTemplate>
+            <ng-container *ngIf="errorMessage; else loading">
+              <div class="text-danger">{{errorMessage}}</div>
+            </ng-container>
+            <ng-template #loading>Loading ...</ng-template>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
